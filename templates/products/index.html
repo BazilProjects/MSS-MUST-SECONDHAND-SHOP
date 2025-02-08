@@ -462,7 +462,8 @@
                 <img src="{{ product.image1.url }}" alt="product-item" class="product-image img-fluid" style="height: 250px;width: 200px;">
                 <div class="cart-concern position-absolute d-flex justify-content-center">
                   <div class="cart-button d-flex gap-2 justify-content-center align-items-center">
-                    <button type="button" class="btn btn-light" >
+                    <button type="button" class="btn btn-light"
+                        onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}', '_blank')">
                       <!-- Add WhatsApp Icon -->
                       <!-- WhatsApp Icon -->
                       <i class="fab fa-whatsapp" aria-hidden="true"></i>

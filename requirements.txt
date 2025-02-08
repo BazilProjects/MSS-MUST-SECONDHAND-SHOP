@@ -8,4 +8,4 @@ xhtml2pdf
 crispy-bootstrap4
 channels
 python-decouple
-
+cloudinary
