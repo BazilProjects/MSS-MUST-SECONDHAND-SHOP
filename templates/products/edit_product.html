@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Product</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Name: <input type="text" name="name" value="{{ product.name }}"></label><br>
+    <label>Price: <input type="text" name="price" value="{{ product.price }}"></label><br>
+    <label>New: <input type="checkbox" name="is_new" {% if product.is_new %}checked{% endif %}></label><br>
+    <label>Old: <input type="checkbox" name="is_old" {% if product.is_old %}checked{% endif %}></label><br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

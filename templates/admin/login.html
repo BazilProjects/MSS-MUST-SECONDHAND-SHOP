@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans 'Log in' %}</h1>
+
+<form action="" method="post">{% csrf_token %}
+  {% if form.errors %}
+    <p class="errornote">
+      {% trans "Your phone number and PIN didn't match. Please try again." %}
+    </p>
+  {% endif %}
+  <div>
+    <label for="id_username">{% trans 'Phone Number:' %}</label>
+    <input type="text" name="username" id="id_username" autofocus required />
+  </div>
+  <div>
+    <label for="id_password">{% trans 'PIN:' %}</label>
+    <input type="password" name="password" id="id_password" required />
+  </div>
+  <div>
+    <input type="submit" value="{% trans 'Log in' %}">
+  </div>
+</form>
+{% endblock %}

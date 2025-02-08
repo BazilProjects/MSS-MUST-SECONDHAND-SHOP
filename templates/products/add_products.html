@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Multiple Products</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Add Multiple Products</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <div id="product-forms">
+            {% for form in formset %}
+                <div class="product-form">
+                    {{ form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="add-more">Add More Products</button>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            let formCount = {{ formset.total_form_count }};
+            let formsetPrefix = '{{ formset.prefix }}';
+
+            $('#add-more').click(function() {
+                let newForm = $('#product-forms .product-form:first').clone();
+                newForm.find('input').val(''); // Clear fields
+                newForm.html(newForm.html().replace(/-\d+-/g, `-${formCount}-`)); // Update indexes
+                newForm.appendTo('#product-forms');
+                formCount++;
+                $(`#id_${formsetPrefix}-TOTAL_FORMS`).val(formCount); // Update management form
+            });
+        });
+    </script>
+
+</body>
+</html>

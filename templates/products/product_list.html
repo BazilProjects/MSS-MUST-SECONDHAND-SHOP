@@ -1,0 +1,30 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Product List</h2>
+<ul id="product-list">
+    {% for product in products %}
+        <li>{{ product.name }} - $<a href="{% url 'edit_product' product_id=product.id  %}">{{ product.price }}</li>
+    {% endfor %}
+</ul>
+<button id="load-more" data-page="2" style="display: {% if total_pages > 1 %}block{% else %}none{% endif %};">Load More</button>
+<script>
+document.getElementById("load-more").addEventListener("click", function() {
+    let button = this;
+    let page = button.getAttribute("data-page");
+    fetch(`/products/ajax/${page}/`).then(response => response.json()).then(data => {
+        if (data.products.length > 0) {
+            let list = document.getElementById("product-list");
+            data.products.forEach(product => {
+                let li = document.createElement("li");
+                li.textContent = `${product.name} - $${product.price}`;
+                list.appendChild(li);
+            });
+            if (!data.has_next) button.style.display = "none";
+            else button.setAttribute("data-page", parseInt(page) + 1);
+        }
+    });
+});
+</script>
+{% endblock %}
