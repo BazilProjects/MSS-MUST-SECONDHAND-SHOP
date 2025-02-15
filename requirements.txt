@@ -9,3 +9,4 @@ crispy-bootstrap4
 channels
 python-decouple
 cloudinary
+crispy-bootstrap5
