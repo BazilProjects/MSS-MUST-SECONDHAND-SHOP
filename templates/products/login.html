@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="modallogin" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="container-fluid modal-fullscreen-md-down modal-md modal-dialog-centered" role="document">
+      <div class="modal-content col col-md-6">
+        <div class="modal-header mx-auto border-0">
+          <h2 class="modal-title fs-3 fw-normal">Login</h2>
+        </div>
+        <div class="modal-body">
+          <div class="login-detail">
+            <div class="login-form p-0">
+              <div class="col-lg-12 mx-auto">
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <p class="errornote text-danger">
+                            "Your phone number and PIN didn't match. Please try again."
+                        </p>
+                    {% endif %}
+                    
+                    <input type="text" name="phone_number" id="id_phone_number" autofocus required placeholder="Phone Number *">
+                      </br>
+                    <input type="password" name="pin" id="id_pin" required placeholder="PIN">
+
+                    <div class="checkbox d-flex justify-content-between mt-4">
+                      <p class="lost-password">
+                        <a href="#">Forgot your password?</a>
+                      </p>
+                    </div>
+
+                    <div class="modal-footer mt-5 d-flex justify-content-center">
+                      <input type="submit" class="btn btn-red hvr-sweep-to-right dark-sweep" value="Login">
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

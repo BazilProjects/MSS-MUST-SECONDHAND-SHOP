@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 
 def add_products(request):
     formset = ProductFormSet()
-
     if request.method == "POST":
         formset = ProductFormSet(request.POST)
         if formset.is_valid():
@@ -13,7 +12,7 @@ def add_products(request):
                     form.save()
             return redirect("success_page")  # Change to the actual success page name
 
-    return render(request, "products/add_products.html", {"formset": formset})
+    return render(request, "products/add_products2.html", {"formset": formset})
 
 from django.shortcuts import render
 
@@ -45,11 +44,14 @@ def sign_up(request):
 def log_in(request):
     errors = []
     phone_number = ""
-
+    phone_number = request.POST.get("phone_number", "").strip()
+    pin = request.POST.get("pin", "").strip()
+    print(phone_number,pin)
+    print(request.method)
     if request.method == "POST":
         phone_number = request.POST.get("phone_number", "").strip()
         pin = request.POST.get("pin", "").strip()
-
+        print(phone_number,pin)
         # Basic validations
         if not phone_number:
             errors.append("Phone number is required.")
@@ -75,7 +77,7 @@ def log_in(request):
         "errors": errors,
         "phone_number": phone_number,
     }
-    return render(request, "auth/login.html", context)
+    return render(request, "products/login.html", context)
 def log_out(request):
     logout(request)
     return redirect("login")
@@ -103,16 +105,42 @@ def product_list(request):
     products = Product.objects.all().order_by("id")
     paginator = Paginator(products, 10)
     first_page = paginator.get_page(1)
-    return render(request, "products/index.html", {"products": first_page, "total_pages": paginator.num_pages})
-
+    form = SignUpForm()
+    return render(request, "products/index.html", {"products": first_page, "total_pages": paginator.num_pages,"form":form})
+"""
 def product_list_ajax(request, page):
     products = Product.objects.all().order_by("id")
     paginator = Paginator(products, 10)
     if page <= paginator.num_pages:
         page_obj = paginator.get_page(page)
-        data = list(page_obj.object_list.values("id", "name", "price", "is_new", "is_old"))
+        data = list(page_obj.object_list.values("id", "name", "price", "is_new", "is_old","image1", ))
         return JsonResponse({"products": data, "has_next": page_obj.has_next()})
+    return JsonResponse({"products": [], "has_next": False})"""
+from django.conf import settings
+from django.db.models import F, Value
+from django.db.models.functions import Concat
+
+def product_list_ajax(request, page):
+    products = Product.objects.all().order_by("id")
+    paginator = Paginator(products, 10)
+    
+    if page <= paginator.num_pages:
+        page_obj = paginator.get_page(page)
+        data = list(
+            page_obj.object_list.values("id" ,"name", "price", "is_new", "is_old")
+        )
+
+        # Convert Cloudinary image field to URL
+        for item in data:
+            product = Product.objects.get(id=item["id"])
+            item["image1"] = product.image1.url if product.image1 else None
+            #user=Product.objects.get(id=item["id"])
+            item["user"]=str(product.user)
+
+        return JsonResponse({"products": data, "has_next": page_obj.has_next()})
+
     return JsonResponse({"products": [], "has_next": False})
+
 
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)

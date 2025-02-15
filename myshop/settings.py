@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',  # Add this line
     'cloudinary',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 
@@ -165,3 +167,9 @@ AUTHENTICATION_BACKENDS = [
     'products.backends.PhoneNumberBackend',  # Custom backend for phone number login
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+
