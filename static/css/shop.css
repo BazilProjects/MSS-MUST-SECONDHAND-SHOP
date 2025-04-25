@@ -1,0 +1,125 @@
+:root {
+    --must-primary: #0054A7;
+    --must-secondary: #FFD100;
+    --must-accent: #4B9F46;
+    --text-dark: #343a40;
+    --bg-light: #f8f9fa;
+  }
+  
+  .coupon-section {
+    padding: 2rem 0;
+  }
+  
+  .coupon {
+    background-color: var(--bg-light);
+    border-radius: 0.5rem;
+  }
+  
+  .coupon__badge {
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--must-accent);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    text-transform: uppercase;
+  }
+  
+  .coupon__title {
+    color: var(--must-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .coupon__title--highlight {
+    color: var(--must-accent);
+    text-decoration: underline;
+  }
+  
+  .coupon__subtitle {
+    color: var(--text-dark);
+    font-size: 1rem;
+  }
+  
+  .btn-primary {
+    background-color: var(--must-primary);
+    border-color: var(--must-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: darken(var(--must-primary), 10%);
+  }
+  
+  .product-card {
+    border: none;
+    border-radius: 0.5rem;
+  }
+  
+  .product-card__image {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card__image:hover {
+    transform: scale(1.05);
+  }
+  
+  .whatsapp-btn {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.2rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+  }
+  
+  .text-accent {
+    color: var(--must-accent) !important;
+  }
+  
+  .bg-secondary-light {
+    background-color: rgba(255, 209, 0, 0.1);
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  
+
+  @media (max-width: 767.98px) {
+    .coupon__badge {
+      position: static !important;
+      transform: none !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 auto 1rem auto;
+      display: inline-block;
+    }
+  }
+
+  
+  .badge-new {
+    background-color: #28a745; /* Green for new products */
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    border-radius: 5px;
+  }
+  
+  .badge-pre-owned {
+    background-color: #6c757d; /* Gray for second-hand products */
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    border-radius: 5px;
+  }
+  

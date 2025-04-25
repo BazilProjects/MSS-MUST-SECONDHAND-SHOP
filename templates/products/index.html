@@ -1,169 +1,139 @@
 {% extends 'base.html' %}
-{% block content %}
-  <section class="discount-coupon py-2 my-2 py-md-5 my-md-5">
-    <div class="container">
-      <div class="bg-gray coupon position-relative p-5">
-        <div class="bold-text position-absolute" style="font-size: xx-large;color: crimson;"><u>Up to 50% OFF</u></div>
-        <div class="row justify-content-between align-items-center">
-          <div class="col-lg-7 col-md-12 mb-3">
-            <div class="coupon-header">
-              <h2 class="display-7" style="color: crimson;">MUST <span style="font-size: xx-large;"><u>SECOND-HAND</u></span> SHOP</h2>
-              <p class="m-0">Sell and Buy from and To fellow Students</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-12">
-            <div class="btn-wrap">
-              <a href="#" class="btn btn-black btn-medium text-uppercase hvr-sweep-to-right">
-                It redirects buyers to seller's WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="featured-products " class="product-store">
-    <br>
-    <div class="container">
-      <div class="display-header d-flex align-items-center justify-content-between">
-        <p class="text-center text-black m-0">
-          MEET AND DEAL DIRECTLY WITH SELLERS (Don't pay Online)
-        </p>
-      </div>
-      <div class="product-content padding-small" id="product-list">
-        <div class="row row-cols-2 row-cols-lg-6">
-          {% for product in products %}
-          <div class="col mb-sm-2" style="width: 220px;">
-            <div class="product-card position-relative">
-              <div class="card-img">
-                <img src="{{ product.image1.url }}" alt="product-item" class="product-image img-fluid" style="height: 270px;width: 210px;">
-                <div class="cart-concern position-absolute d-flex justify-content-center">
-                  <div class="cart-button d-flex gap-2 justify-content-center align-items-center">
-                    <button type="button" class="btn btn-light"
-                      onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}', '_blank')">
-                      <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-center mt-3">
-                <h3 class="card-title fs-6 fw-normal m-0">
-                  <a href="index.html">
-                    {% if product.name %}
-                      <span style="color:green;"><u><b>{{ product.name }}</b></u></span>
-                    {% endif %}
-                  </a>
-                </h3>
-                <span class="card-price fw-bold">{{ product.price }} UGX</span>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="container" style="text-align: center;">
-    <button id="load-more" data-page="2" 
-        style="display: {% if total_pages > 1 %}block{% else %}none{% endif %}; margin: auto;">
-      Load More
-    </button>
-</section>
+{% load static %}
 
-  
-  <!-- Updated script with image update -->
+{% block content %}
+
+  <!-- Coupon Banner -->
+  <section class="coupon-section">
+    <div class="container px-3 px-md-0">
+      <div class="coupon bg-secondary-light p-4 p-md-5 position-relative text-center">
+        <div class="coupon__badge d-inline-block position-static position-lg-absolute mx-auto mb-3 mb-lg-0">
+          +   Up to 50% OFF
+          + </div>
+
+        <div class="row align-items-center justify-content-between">
+          <div class="col-12 col-lg-7 mb-3 mb-lg-0">
+            <h2 class="coupon__title">
+              MUST <span class="coupon__title--highlight">SECOND-HAND</span> SHOP
+            </h2>
+            <p class="coupon__subtitle">Sell and buy from and to fellow students.</p>
+          </div>
+          <div class="col-12 col-lg-3 text-center text-lg-end">
+            <a href="#" class="btn btn-primary btn-lg w-100 w-lg-auto">Contact Seller on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section id="featured-products" class="product-store py-5">
+    <div class="container">
+      <p class="text-center mb-4 text-dark fw-semibold">
+        MEET AND DEAL DIRECTLY WITH SELLERS — <em>Don’t pay online</em>
+      </p>
+      <div id="product-list" class="row g-3">
+        {% for product in products %}
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="position-relative overflow-hidden">
+              <img src="{{ product.image1.url }}" alt="{{ product.name }}" class="card-img-top product-card__image">
+              <button
+                type="button"
+                onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}','_blank')"
+                style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; color: #fff; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;">
+                <img
+                  src="{% static 'images/whatsapp-brands.svg' %}"
+                  alt="WhatsApp"
+                  style="display: block; width: 32px; height: 32px;" />
+              </button>
+              
+              <!-- Display the product status -->
+              {% if product.is_new %}
+              <div class="badge bg-success text-white position-absolute top-0 start-0 m-2">Brand New</div>
+              {% else %}
+              <div class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Second Hand</div>
+              {% endif %}
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="card-title fs-6 text-truncate mb-2">
+                <a href="#" class="text-decoration-none text-accent">{{ product.name }}</a>
+              </h3>
+              <div class="mt-auto d-flex justify-content-between">
+                <span class="fw-bold">{{ product.price }} UGX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if total_pages > 1 %}
+      <div class="text-center mt-4">
+        <button id="load-more" data-page="2" class="btn btn-outline-primary px-4">Load More</button>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
   <script>
-    document.getElementById("load-more").addEventListener("click", function() {
-      const button = this;
-      const page = button.getAttribute("data-page");
+    document.getElementById("load-more")?.addEventListener("click", function() {
+      const btn = this;
+      const nextPage = btn.dataset.page;
   
-      fetch(`/products/ajax/${page}/`)
-        .then(response => response.json())
+      console.log(`Loading page: ${nextPage}`);  // Debugging output
+  
+      fetch(`/products/ajax/${nextPage}/`)
+        .then(r => r.json())
         .then(data => {
+          console.log(data);  // Debugging output to check the response
+  
+          // Check if data.products exists and has items
           if (data.products && data.products.length > 0) {
-            const rowContainer = document.querySelector("#product-list .row");
+            const row = document.querySelector("#product-list");
             data.products.forEach(product => {
-              console.log(product); // Debug: Check product structure
-              
-              const colDiv = document.createElement("div");
-              colDiv.classList.add("col", "mb-sm-2");
-              colDiv.style.width = "210px";
-              
-              const productCard = document.createElement("div");
-              productCard.classList.add("product-card", "position-relative");
-              
-              const cardImg = document.createElement("div");
-              cardImg.classList.add("card-img");
-              
-              const img = document.createElement("img");
-              // Adjust this line based on your JSON structure:
-              img.src =product.image1 || (product.image1 ? product.image1.url : '');
-              img.alt = "product-item";
-              img.classList.add("product-image", "img-fluid");
-              img.style.height = "270px";
-              img.style.width = "250px";
-              cardImg.appendChild(img);
-              
-              const cartConcern = document.createElement("div");
-              cartConcern.classList.add("cart-concern", "position-absolute", "d-flex", "justify-content-center");
-              
-              const cartButton = document.createElement("div");
-              cartButton.classList.add("cart-button", "d-flex", "gap-2", "justify-content-center", "align-items-center");
-              
-              const btn = document.createElement("button");
-              btn.type = "button";
-              btn.classList.add("btn", "btn-light");
-              btn.addEventListener("click", function() {
-                window.open(`https://api.whatsapp.com/send?phone=${product.user}`, "_blank");
-              });
-              
-              const icon = document.createElement("i");
-              icon.classList.add("fab", "fa-whatsapp");
-              icon.setAttribute("aria-hidden", "true");
-              btn.appendChild(icon);
-              
-              cartButton.appendChild(btn);
-              cartConcern.appendChild(cartButton);
-              cardImg.appendChild(cartConcern);
-              
-              const cardDetail = document.createElement("div");
-              cardDetail.classList.add("card-detail", "d-flex", "justify-content-between", "align-items-center", "mt-3");
-              
-              const title = document.createElement("h3");
-              title.classList.add("card-title", "fs-6", "fw-normal", "m-0");
-              
-              const aElem = document.createElement("a");
-              aElem.href = "index.html";
-              if (product.name) {
-                const span = document.createElement("span");
-                span.style.color = "green";
-                span.innerHTML = `<u><b>${product.name}</b></u>`;
-                aElem.appendChild(span);
-              }
-              title.appendChild(aElem);
-              cardDetail.appendChild(title);
-              
-              const priceSpan = document.createElement("span");
-              priceSpan.classList.add("card-price", "fw-bold");
-              priceSpan.textContent = product.price + " UGX";
-              cardDetail.appendChild(priceSpan);
-              
-              productCard.appendChild(cardImg);
-              productCard.appendChild(cardDetail);
-              colDiv.appendChild(productCard);
-              
-              rowContainer.appendChild(colDiv);
+              const col = document.createElement("div");
+              col.className = "col-6 col-sm-4 col-md-3 col-lg-2";
+              col.innerHTML = `
+                <div class="card product-card h-100 shadow-sm">
+                  <div class="position-relative overflow-hidden">
+                    <img src="${product.image1?.url || product.image1}" alt="${product.name}" class="card-img-top product-card__image">
+                    <button class="btn btn-light whatsapp-btn" onclick="window.open('https://api.whatsapp.com/send?phone=${product.user}','_blank')"
+                      style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; color: #fff; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;">
+                      <img
+                      src="{% static 'images/whatsapp-brands.svg' %}"
+                      alt="WhatsApp"
+                      style="display: block; width: 32px; height: 32px;" />
+                    </button>
+                    
+                    <!-- Display the product status -->
+                    ${product.is_new ? `<div class="badge bg-success text-white position-absolute top-0 start-0 m-2">Brand New</div>` : `<div class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Second Hand</div>`}
+                  </div>
+                  <div class="card-body d-flex flex-column">
+                    <h3 class="card-title fs-6 text-truncate mb-2">
+                      <a href="#" class="text-decoration-none text-accent">${product.name}</a>
+                    </h3>
+                    <div class="mt-auto d-flex justify-content-between">
+                      <span class="fw-bold">${product.price} UGX</span>
+                    </div>
+                  </div>
+                </div>`;
+              row.appendChild(col);
             });
-            
+  
+            // Check if there are more pages to load
             if (!data.has_next) {
-              button.style.display = "none";
+              btn.remove();  // Remove the "Load More" button if no more pages
             } else {
-              button.setAttribute("data-page", parseInt(page) + 1);
+              btn.dataset.page = parseInt(nextPage) + 1;  // Update the page number for the next request
             }
+          } else {
+            console.error("No products found in the response data");
           }
         })
-        .catch(error => console.error("Error loading more products:", error));
+        .catch(err => console.error("Load more error:", err));
     });
   </script>
   
+
 {% endblock %}

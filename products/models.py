@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from cloudinary.models import CloudinaryField
+#from cloudinary.models import CloudinaryField
 from django.conf import settings
 
 class Product(models.Model):
@@ -9,11 +9,14 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_new = models.BooleanField(default=False)
     is_old = models.BooleanField(default=False)
+    image1 = models.ImageField(upload_to='products/', blank=True, null=True)
+
+    '''
     image1 = CloudinaryField('image', folder='products/', blank=True, null=True)
     image2 = CloudinaryField('image', folder='products/', blank=True, null=True)
     image3 = CloudinaryField('image', folder='products/', blank=True, null=True)
     image4 = CloudinaryField('image', folder='products/', blank=True, null=True)
-
+    '''
     def __str__(self):
         return f"{self.name} by {self.user.phone_number}"
 

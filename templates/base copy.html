@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MUST Campus Deals</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- Vendor & Base Styles -->
+  <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- MUST Shop Custom Styles -->
+  <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+
+  <!-- FontAwesome & Fonts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <svg version="1.1" id="L4" width="100" height="100" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+      viewBox="0 0 50 100" xml:space="preserve">
+      <circle fill="#0054A7" cx="6" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1" />
+      </circle>
+      <circle fill="#FFD100" cx="26" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2" />
+      </circle>
+      <circle fill="#4B9F46" cx="46" cy="50" r="6">
+        <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3" />
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Search Modal & Quick View Modals -->
+ 
+  <div class="modal fade" id="modallogin" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-fullscreen-md-down modal-md modal-dialog-centered" role="document">
+      <div class="modal-content p-4">
+        <div class="modal-close-btn">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-header mx-auto border-0">
+          <h2 class="modal-title fs-3 fw-normal">Login</h2>
+
+        </div>
+        <div class="modal-body">
+          <div class="login-detail">
+            <div class="login-form p-0">
+              <div class="col-lg-12 mx-auto">
+                <form method="POST" action="{% url 'login' %}">
+                  {% csrf_token %}
+                  
+                  {% if form.errors %}
+                      <p class="errornote text-danger">
+                          "Your phone number and PIN didn't match. Please try again."
+                      </p>
+                  {% endif %}
+                  
+                  <input type="text" name="phone_number" id="id_phone_number" autofocus required placeholder="Phone Number *">
+                    </br>
+                  <input type="password" name="pin" id="id_pin" required placeholder="PIN">
+
+                  <div class="checkbox d-flex justify-content-between mt-4">
+                    <p class="lost-password">
+                      <a href="#">Forgot your password?</a>
+                    </p>
+                  </div>
+
+                  <div class="modal-footer mt-5 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-red hvr-sweep-to-right dark-sweep" value="Login">
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer mt-5 d-flex justify-content-center">
+              <button type="button" class="btn btn-red hvr-sweep-to-right dark-sweep">Login</button>
+              <button type="button"
+                class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Login -->
+
+  <div class="modal fade" id="modalsignup" tabindex="-1" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-fullscreen-md-down modal-md modal-dialog-centered" role="document">
+      <div class="modal-content p-4">
+        <div class="modal-close-btn">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-header mx-auto border-0">
+          <h2 class="modal-title fs-3 fw-normal">Login</h2>
+
+        </div>
+        <div class="modal-body">
+          <div class="login-detail">
+            <div class="login-form p-0">
+              <div class="col-lg-12 mx-auto">
+                <form method="POST" action="{% url 'signup' %}">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Sign Up</button>
+                  <a href="{% url 'login' %}" class="btn btn-red hvr-sweep-to-right dark-sweep">Already have an account? Login</a>
+
+              </form>
+              </div>
+            </div>
+            <div class="modal-footer mt-5 d-flex justify-content-center">
+              <button type="button" class="btn btn-red hvr-sweep-to-right dark-sweep">Login</button>
+              <button type="button"
+                class="btn btn-outline-gray hvr-sweep-to-right dark-sweep">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Register -->
+
+  <!-- Header -->
+  <header id="header" class="site-header">
+    <div class="header-top border-bottom py-2">
+      <div class="container-lg d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <a class="navbar-brand me-3" href="#">
+            <img src="{% static 'images/must-removebg-preview.png' %}" alt="MUST Logo" class="logo">
+          </a>
+          <div>
+            <p class="mb-0 fw-bold">MBARARA UNIVERSITY</p>
+            <small>CAMPUS DEALS</small>
+          </div>
+        </div>
+        <div>
+          <ul class="d-flex gap-3 list-unstyled mb-0">
+            {% if user.is_authenticated %}
+              <li><a href="/logout" class="btn btn-outline-danger">Logout</a></li>
+            {% else %}
+              <li><button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalsignup">Register</button></li>
+              <li><button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modallogin">Login</button></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Coupon Banner -->
+  <section class="coupon-section">
+    <div class="container">
+      <div class="coupon bg-secondary-light p-5 position-relative text-center">
+        <div class="coupon__badge">Up to 50% OFF</div>
+        <div class="row align-items-center justify-content-between">
+          <div class="col-lg-7">
+            <h2 class="coupon__title">
+              MUST <span class="coupon__title--highlight">SECOND-HAND</span> SHOP
+            </h2>
+            <p class="coupon__subtitle">Sell and buy from and to fellow students.</p>
+          </div>
+          <div class="col-lg-3 text-lg-end mt-4 mt-lg-0">
+            <a href="#" class="btn btn-primary btn-lg">Contact Seller on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section id="featured-products" class="product-store py-5">
+    <div class="container">
+      <p class="text-center mb-4 text-dark fw-semibold">
+        MEET AND DEAL DIRECTLY WITH SELLERS — <em>Don’t pay online</em>
+      </p>
+      <div id="product-list" class="row g-4">
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="position-relative overflow-hidden">
+              <img src="{{ product.image1.url }}" alt="{{ product.name }}" class="card-img-top product-card__image">
+              <button type="button" class="btn btn-light whatsapp-btn"
+                onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}','_blank')">
+                <i class="fab fa-whatsapp"></i>
+              </button>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h3 class="card-title fs-6 text-truncate mb-2">
+                <a href="#" class="text-decoration-none text-accent">{{ product.name }}</a>
+              </h3>
+              <div class="mt-auto d-flex justify-content-between">
+                <span class="fw-bold">{{ product.price }} UGX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if total_pages > 1 %}
+      <div class="text-center mt-4">
+        <button id="load-more" data-page="2" class="btn btn-outline-primary">
+          Load More
+        </button>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Load More Script -->
+  <script>
+    document.getElementById("load-more")?.addEventListener("click", function() {
+      const btn = this;
+      const nextPage = btn.dataset.page;
+      fetch(`/products/ajax/${nextPage}/`)
+        .then(r => r.json())
+        .then(data => {
+          const row = document.querySelector("#product-list");
+          data.products.forEach(product => {
+            const col = document.createElement("div");
+            col.className = "col-6 col-md-4 col-lg-2";
+            col.innerHTML = `
+              <div class="card product-card h-100 shadow-sm">
+                <div class="position-relative overflow-hidden">
+                  <img src="${product.image1?.url || product.image1}" alt="${product.name}" class="card-img-top product-card__image">
+                  <button class="btn btn-light whatsapp-btn" onclick="window.open('https://api.whatsapp.com/send?phone=${product.user}','_blank')">
+                    <i class="fab fa-whatsapp"></i>
+                  </button>
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h3 class="card-title fs-6 text-truncate mb-2">
+                    <a href="#" class="text-decoration-none text-accent">${product.name}</a>
+                  </h3>
+                  <div class="mt-auto d-flex justify-content-between">
+                    <span class="fw-bold">${product.price} UGX</span>
+                  </div>
+                </div>
+              </div>`;
+            row.appendChild(col);
+          });
+          if (!data.has_next) btn.remove(); else btn.dataset.page = parseInt(nextPage) + 1;
+        })
+        .catch(err => console.error("Load more error:", err));
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer id="footer" class="py-5 border-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="widget-title pb-3 text-primary">MSS - simple, data-efficient & free</h5>
+          <p>MBARARA CITY – meet and deal with the client</p>
+          <p>Call us: (+256) 702 317 807</p>
+          <p><a href="mailto:sales@lecz.ltd">sales@lecz.ltd</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+  <script src="{% static 'js/plugins.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

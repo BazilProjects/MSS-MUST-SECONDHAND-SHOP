@@ -2,6 +2,18 @@ from django.shortcuts import render
 from .forms import ProductFormSet  # Ensure you are importing from forms.py
 from django.shortcuts import render, redirect
 
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
+from django.urls import path
+from .models import Product
+import json
+
+def dashboard(request):
+    products = Product.objects.all()#.filter(user=request.user)
+    return render(request, "products/dashboard.html", {"products": products})
+
 def add_products(request):
     formset = ProductFormSet()
     if request.method == "POST":
@@ -27,6 +39,8 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import SignUpForm, LoginForm
 from .models import CustomUser
 
+from django.contrib.auth import login, authenticate
+
 def sign_up(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -34,11 +48,15 @@ def sign_up(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data["pin"])  # Encrypt PIN
             user.save()
-            login(request, user)
-            return redirect("home")  # Redirect to home page
+
+            # Explicitly authenticate the user
+            user = authenticate(request, username=user.phone_number, password=form.cleaned_data["pin"])
+            if user is not None:
+                login(request, user)  # Now Django knows the backend
+                return redirect("product_list")
     else:
         form = SignUpForm()
-    return render(request, "auth/signup.html", {"form": form})
+    return render(request, "products/signup.html", {"form": form})
 
 
 def log_in(request):
@@ -67,11 +85,14 @@ def log_in(request):
             user = authenticate(phone_number=phone_number, pin=pin)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('product_list')
             else:
-                 errors.append("Invalid phone number or PIN.")
+                print("Invalid phone number or PIN.")
+                errors.append("Invalid phone number or PIN.")
             #For now, we'll simply redirect if there are no errors:
             return redirect("product_list")
+        else:
+            print("Invalid phone number or PIN.-2")
 
     context = {
         "errors": errors,
@@ -93,17 +114,10 @@ def log_out(request):
 
 
 
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
-from django.urls import path
-from .models import Product
-import json
 
 def product_list(request):
     products = Product.objects.all().order_by("id")
-    paginator = Paginator(products, 10)
+    paginator = Paginator(products, 5)
     first_page = paginator.get_page(1)
     form = SignUpForm()
     return render(request, "products/index.html", {"products": first_page, "total_pages": paginator.num_pages,"form":form})
@@ -122,7 +136,7 @@ from django.db.models.functions import Concat
 
 def product_list_ajax(request, page):
     products = Product.objects.all().order_by("id")
-    paginator = Paginator(products, 10)
+    paginator = Paginator(products, 5)
     
     if page <= paginator.num_pages:
         page_obj = paginator.get_page(page)
@@ -141,6 +155,24 @@ def product_list_ajax(request, page):
 
     return JsonResponse({"products": [], "has_next": False})
 
+def add_product(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        is_new = request.POST.get("is_new") == "on"
+        is_old = request.POST.get("is_old") == "on"
+        image = request.FILES.get("image")
+
+        if name and price:
+            Product.objects.create(
+                name=name,
+                price=price,
+                is_new=is_new,
+                is_old=is_old,
+                image=image
+            )
+            return redirect('dashboard')
+    return render(request, "products/add_product.html")
 
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -149,12 +181,14 @@ def edit_product(request, product_id):
         product.price = request.POST.get("price", product.price)
         product.is_new = request.POST.get("is_new") == "on"
         product.is_old = request.POST.get("is_old") == "on"
+        if 'image' in request.FILES:
+            product.image1 = request.FILES['image']
         product.save()
-        return redirect('home')
+        return redirect('product_list')
     return render(request, "products/edit_product.html", {"product": product})
 
 @csrf_exempt
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.delete()
-    return JsonResponse({"success": True})
+    return redirect('dashboard')

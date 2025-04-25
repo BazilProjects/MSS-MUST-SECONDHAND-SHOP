@@ -9,6 +9,8 @@ urlpatterns = [
     path("logout/", log_out, name="logout"),
 
     path("", product_list, name="product_list"),
+    path("add_product", add_product, name="add_product"),
+    path("dashboard", dashboard, name="dashboard"),
     path("products/ajax/<int:page>/", product_list_ajax, name="product_list_ajax"),
     path("products/edit/<int:product_id>/", edit_product, name="edit_product"),
     path("products/delete/<int:product_id>/", delete_product, name="delete_product"),

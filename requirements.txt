@@ -10,3 +10,5 @@ channels
 python-decouple
 cloudinary
 crispy-bootstrap5
+Pillow
+numpy
