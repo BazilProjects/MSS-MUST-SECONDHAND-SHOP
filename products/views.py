@@ -163,6 +163,7 @@ def add_product(request):
         is_new = request.POST.get("is_new") == "on"
         is_old = request.POST.get("is_old") == "on"
         image = request.FILES.get("image")
+        print(image)
 
         if name and price:
             Product.objects.create(

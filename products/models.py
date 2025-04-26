@@ -9,7 +9,7 @@ class Product(models.Model):
     price = models.IntegerField(max_length=10,)
     is_new = models.BooleanField(default=False)
     is_old = models.BooleanField(default=False)
-    image1 = models.ImageField(upload_to='products/', blank=True, null=True)
+    image1 = models.ImageField(upload_to='media/products/')
 
     '''
     image1 = CloudinaryField('image', folder='products/', blank=True, null=True)
