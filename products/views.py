@@ -166,6 +166,7 @@ def add_product(request):
 
         if name and price:
             Product.objects.create(
+                user=request.user,
                 name=name,
                 price=price,
                 is_new=is_new,
