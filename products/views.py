@@ -82,10 +82,11 @@ def log_in(request):
         # If there are no errors, perform login logic
         if not errors:
             # Example authentication logic (replace with your own)
-            user = authenticate(phone_number=phone_number, pin=pin)
+            user = authenticate(phone_number=phone_number, password=pin)
+            print(user)
             if user is not None:
                 login(request, user)
-                return redirect('product_list')
+                return redirect('dashboard')
             else:
                 print("Invalid phone number or PIN.")
                 errors.append("Invalid phone number or PIN.")
