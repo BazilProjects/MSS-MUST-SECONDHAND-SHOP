@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.urls import path
 from .models import Product
 import json
-
+@login_required
 def dashboard(request):
     products = Product.objects.all()#.filter(user=request.user)
     return render(request, "products/dashboard.html", {"products": products})
@@ -58,7 +58,7 @@ def sign_up(request):
         form = SignUpForm()
     return render(request, "products/signup.html", {"form": form})
 
-
+'''
 def log_in(request):
     errors = []
     phone_number = ""
@@ -100,6 +100,46 @@ def log_in(request):
         "phone_number": phone_number,
     }
     return render(request, "products/login.html", context)
+'''
+# products/views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def log_in(request):
+    """Login view — on POST, validate phone & PIN, then authenticate."""
+    if request.method == "POST":
+        phone_number = request.POST.get("phone_number", "").strip()
+        pin          = request.POST.get("pin",          "").strip()
+
+        # 1) Field validations
+        if not phone_number:
+            messages.error(request, "Phone number is required.")
+        if not pin:
+            messages.error(request, "PIN is required.")
+        elif len(pin) != 4 or not pin.isdigit():
+            messages.error(request, "PIN must be a 4-digit number.")
+
+        # 2) If no validation errors, attempt authenticate
+        if not messages.get_messages(request):  # no error messages so far
+            user = authenticate(phone_number=phone_number, password=pin)
+            if user:
+                login(request, user)
+                messages.success(request, "Welcome back! 🎉")
+                return redirect("dashboard")
+            else:
+                messages.error(request, "Invalid phone number or PIN.")
+
+        # Always redirect on POST, to avoid double submits
+        return redirect("log_in")
+
+    # GET → just render the form
+    return render(request, "products/login.html", {
+        "phone_number": request.POST.get("phone_number", "")
+    })
+
+@login_required
 def log_out(request):
     logout(request)
     return redirect("login")
@@ -176,7 +216,7 @@ def add_product(request):
             )
             return redirect('dashboard')
     return render(request, "products/add_product.html")
-
+@login_required
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
@@ -187,9 +227,10 @@ def edit_product(request, product_id):
         if 'image' in request.FILES:
             product.image1 = request.FILES['image']
         product.save()
-        return redirect('product_list')
+        return redirect('dashboard')
     return render(request, "products/edit_product.html", {"product": product})
 
+@login_required
 @csrf_exempt
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
