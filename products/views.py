@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import ProductFormSet  # Ensure you are importing from forms.py
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -155,7 +155,7 @@ def product_list_ajax(request, page):
         return JsonResponse({"products": data, "has_next": page_obj.has_next()})
 
     return JsonResponse({"products": [], "has_next": False})
-
+@login_required
 def add_product(request):
     if request.method == "POST":
         name = request.POST.get("name")
