@@ -170,7 +170,7 @@ def add_product(request):
                 price=price,
                 is_new=is_new,
                 is_old=is_old,
-                image=image
+                image1=image
             )
             return redirect('dashboard')
     return render(request, "products/add_product.html")

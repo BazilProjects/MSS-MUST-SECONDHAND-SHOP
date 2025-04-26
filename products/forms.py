@@ -5,7 +5,7 @@ from .models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ["name", "price", "is_new", "is_old"]
+        fields = ["name", "price","image1", "is_new", "is_old"]
 
 # Use `modelformset_factory` instead of `formset_factory` to work with models
 ProductFormSet = modelformset_factory(Product, form=ProductForm, extra=1, can_delete=True)
