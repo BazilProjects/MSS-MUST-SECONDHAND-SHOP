@@ -1,0 +1,9 @@
+# Django SQLite database
+db.sqlite3
+
+# If your database file lives in a subfolder, include the path:
+# e.g. /project_root/database/db.sqlite3
+/database/db.sqlite3
+
+# If you’re using a custom filename:
+*.sqlite3

@@ -6,7 +6,7 @@ from django.conf import settings
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products")
     name = models.CharField(max_length=255, blank=True, null=True)
-    price = models.IntegerField(max_length=10,)
+    price = models.IntegerField()
     is_new = models.BooleanField(default=False)
     is_old = models.BooleanField(default=False)
     image1 = models.ImageField(upload_to='media/products/')

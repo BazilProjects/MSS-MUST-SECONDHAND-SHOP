@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>MUST Campus Deals</title>
+  <title>MUST GIGZ STORE</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <!-- MUST Shop Custom Styles -->
   <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+  <!-- Bootstrap v5.3.5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
 
 
 </head>
@@ -133,7 +136,7 @@
           <img src="{% static 'images/must-removebg-preview.png' %}" alt="MUST Logo" class="logo me-2" style="height:50px;">
           <div>
             <p class="mb-0 fw-bold">MBARARA UNIVERSITY</p>
-            <small>CAMPUS DEALS</small>
+            <small>GIGZ STORE</small>
           </div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
@@ -178,23 +181,79 @@
 {# include our flash-modal partial #}
 {% include "partials/messages_modal.html" %}
   <!-- Footer -->
-  <footer id="footer" class="py-5 border-top">
-    <div class="container text-center text-md-start">
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <h5 class="widget-title pb-3 text-primary">MSS - simple, data-efficient & free</h5>
-          <p>MBARARA CITY – meet and deal with the client</p>
-          <p>Call us: (+256) 702 317 807</p>
-          <p><a href="mailto:sales@lecz.ltd">sales@lecz.ltd</a></p>
+   <!-- Footer -->
+<footer id="footer" class="py-5 border-top bg-light text-dark">
+  <div class="container">
+    <div class="row align-items-start">
+      <!-- Company Info -->
+      <div class="col-12 col-md-6 col-lg-4 mb-4 mb-md-0">
+        <h5 class="text-primary fw-bold mb-3">MGS – Simple, Data-Efficient & Free</h5>
+        <p class="mb-2">
+          <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+          Mbarara City – Meet and deal with the client
+        </p>
+        <p class="mb-2">
+          <i class="fas fa-phone-alt me-2 text-primary"></i>
+          (+256) 77 657 6547
+        </p>
+        <p class="mb-2">
+          <i class="fas fa-envelope me-2 text-primary"></i>
+          <a href="mailto:sales@lecz.ltd" class="text-decoration-none text-dark">sales@lecz.ltd</a>
+        </p>
+        <p class="mb-0">
+          <i class="fas fa-globe me-2 text-primary"></i>
+          <a href="https://lecz.ltd" class="text-decoration-none text-dark" target="_blank">
+            lecz.ltd
+          </a>
+        </p>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="col-12 col-md-6 col-lg-4 mb-4 mb-md-0">
+        <h5 class="text-primary fw-bold mb-3">Connect with Us</h5>
+        <div class="d-flex">
+          <a href="https://facebook.com/yourpage" target="_blank"
+             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
+            <i class="fab fa-facebook-f fa-lg align-middle"></i>
+          </a>
+          <a href="https://twitter.com/yourprofile" target="_blank"
+             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
+            <i class="fab fa-twitter fa-lg align-middle"></i>
+          </a>
+          <a href="https://instagram.com/yourprofile" target="_blank"
+             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
+            <i class="fab fa-instagram fa-lg align-middle"></i>
+          </a>
+          <a href="https://linkedin.com/company/yourcompany" target="_blank"
+             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
+            <i class="fab fa-linkedin-in fa-lg align-middle"></i>
+          </a>
+          <a href="https://wa.me/256776576547" target="_blank"
+             class="btn btn-outline-dark rounded-circle" style="width:40px; height:40px; padding:0;">
+            <i class="fab fa-whatsapp fa-lg align-middle"></i>
+          </a>
         </div>
       </div>
     </div>
-  </footer>
+
+    <hr class="my-4">
+
+    <!-- Footer Bottom -->
+    <div class="row">
+      <div class="col text-center">
+        <small class="text-muted">&copy; 2025 MSS. All rights reserved.</small>
+      </div>
+    </div>
+  </div>
+</footer>
 
   <!-- Scripts -->
   <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
   <script src="{% static 'js/plugins.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
+  <!-- Bootstrap v5.3.5 Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
