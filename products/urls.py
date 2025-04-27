@@ -8,6 +8,13 @@ urlpatterns = [
     path("login/", log_in, name="login"),
     path("logout/", log_out, name="logout"),
 
+
+    
+     path('disclaimer', disclaimer_view, name='disclaimer'),
+    path('terms-and-conditions', terms_view, name='terms_and_conditions'),
+    path('our-apps/', our_apps_view, name='our_apps'),
+
+
     path("", product_list, name="product_list"),
     path("add_product", add_product, name="add_product"),
     path("dashboard", dashboard, name="dashboard"),

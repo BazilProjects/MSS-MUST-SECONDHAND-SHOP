@@ -16,9 +16,18 @@
   <!-- MUST Shop Custom Styles -->
   <link rel="stylesheet" href="{% static 'css/shop.css' %}">
   <!-- Bootstrap v5.3.5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <!-- Bootstrap 5.3.5 CSS (official jsDelivr CDN) -->
+   <!-- Font Awesome Free 6.4.0 via CDNJS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+crossorigin="anonymous"
+/>
 
+<!-- …other head tags… -->
 
 </head>
 
@@ -132,7 +141,7 @@
   <header id="header">
     <nav class="navbar navbar-expand-lg bg-light py-2">
       <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="/">
           <img src="{% static 'images/must-removebg-preview.png' %}" alt="MUST Logo" class="logo me-2" style="height:50px;">
           <div>
             <p class="mb-0 fw-bold">MBARARA UNIVERSITY</p>
@@ -143,9 +152,12 @@
           aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
+        <!---
         <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
           <ul class="navbar-nav align-items-center mb-2 mb-lg-0 gap-2">
+            <li class="nav-item">
+              <a href="/" class="btn btn-outline-primary btn-sm btn-lg-md">Home</a>
+            </li>
             {% if user.is_authenticated %}
               <li class="nav-item">
                 <a href="/logout" class="btn btn-outline-danger btn-sm btn-lg-md">Logout</a>
@@ -169,7 +181,71 @@
 
           </ul>
         </div>
-
+        -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+          <ul class="navbar-nav align-items-center mb-2 mb-lg-0 gap-2">
+        
+            <!-- Home -->
+            <li class="nav-item">
+              <a href="/" class="btn btn-outline-primary btn-sm btn-lg-md">
+                <i class="fas fa-home me-1"></i> Home
+              </a>
+            </li>
+        
+            {% if user.is_authenticated %}
+              <!-- Dashboard -->
+              <li class="nav-item">
+                <a href="/dashboard" class="btn btn-outline-primary btn-sm btn-lg-md">
+                  <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                </a>
+              </li>
+        
+              <!-- Logout -->
+              <li class="nav-item">
+                <a href="/logout" class="btn btn-outline-danger btn-sm btn-lg-md">
+                  <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </a>
+              </li>
+            {% else %}
+              <!-- Register -->
+              <li class="nav-item">
+                <button class="btn btn-outline-warning btn-sm btn-lg-md" data-bs-toggle="modal" data-bs-target="#modalsignup">
+                  <i class="fas fa-user-plus me-1"></i> Register
+                </button>
+              </li>
+        
+              <!-- Login -->
+              <li class="nav-item">
+                <button class="btn btn-outline-success btn-sm btn-lg-md" data-bs-toggle="modal" data-bs-target="#modallogin">
+                  <i class="fas fa-sign-in-alt me-1"></i> Login
+                </button>
+              </li>
+            {% endif %}
+        
+            <!-- Disclaimer -->
+            <li class="nav-item">
+              <a href="{% url 'disclaimer' %}" class="btn btn-outline-secondary btn-sm btn-lg-md">
+                <i class="fas fa-file-alt me-1"></i> Disclaimer
+              </a>
+            </li>
+        
+            <!-- Terms & Conditions -->
+            <li class="nav-item">
+              <a href="{% url 'terms_and_conditions' %}" class="btn btn-outline-secondary btn-sm btn-lg-md">
+                <i class="fas fa-file-contract me-1"></i> Terms &amp; Conditions
+              </a>
+            </li>
+            <!-- Our Apps -->
+            <li class="nav-item">
+              <a href="{% url 'our_apps' %}"
+                class="btn btn-outline-info btn-sm btn-lg-md">
+                <i class="fas fa-th-large me-1"></i> Our Apps
+              </a>
+            </li>
+        
+          </ul>
+        </div>
+        
       </div>
     </nav>
   </header>
@@ -209,31 +285,52 @@
       </div>
 
       <!-- Social Media Links -->
-      <div class="col-12 col-md-6 col-lg-4 mb-4 mb-md-0">
-        <h5 class="text-primary fw-bold mb-3">Connect with Us</h5>
-        <div class="d-flex">
-          <a href="https://facebook.com/yourpage" target="_blank"
-             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
-            <i class="fab fa-facebook-f fa-lg align-middle"></i>
-          </a>
-          <a href="https://twitter.com/yourprofile" target="_blank"
-             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
-            <i class="fab fa-twitter fa-lg align-middle"></i>
-          </a>
-          <a href="https://instagram.com/yourprofile" target="_blank"
-             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
-            <i class="fab fa-instagram fa-lg align-middle"></i>
-          </a>
-          <a href="https://linkedin.com/company/yourcompany" target="_blank"
-             class="btn btn-outline-dark rounded-circle me-2" style="width:40px; height:40px; padding:0;">
-            <i class="fab fa-linkedin-in fa-lg align-middle"></i>
-          </a>
-          <a href="https://wa.me/256776576547" target="_blank"
-             class="btn btn-outline-dark rounded-circle" style="width:40px; height:40px; padding:0;">
-            <i class="fab fa-whatsapp fa-lg align-middle"></i>
-          </a>
-        </div>
-      </div>
+      <!-- Social Media Links -->
+<div class="col-12 col-md-6 col-lg-4 mb-4 mb-md-0">
+  <h5 class="text-primary fw-bold mb-3">Connect with Us</h5>
+  <div class="d-flex">
+    <!-- Facebook -->
+    <a href="https://facebook.com/yourpage" target="_blank"
+       class="btn rounded-circle me-2"
+       style="width:40px; height:40px; padding:0;
+              background-color:#1877F2; border:1px solid #1877F2; color:#fff;">
+      <i class="fab fa-facebook-f fa-lg align-middle"></i>
+    </a>
+
+    <!-- X (formerly Twitter) -->
+    <a href="https://twitter.com/yourprofile" target="_blank"
+       class="btn rounded-circle me-2"
+       style="width:40px; height:40px; padding:0;
+              background-color:#1DA1F2; border:1px solid #1DA1F2; color:#fff;">
+      <i class="fab fa-x fa-lg align-middle"></i>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/yourprofile" target="_blank"
+       class="btn rounded-circle me-2"
+       style="width:40px; height:40px; padding:0;
+              background-color:#E1306C; border:1px solid #E1306C; color:#fff;">
+      <i class="fab fa-instagram fa-lg align-middle"></i>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://linkedin.com/company/yourcompany" target="_blank"
+       class="btn rounded-circle me-2"
+       style="width:40px; height:40px; padding:0;
+              background-color:#0077B5; border:1px solid #0077B5; color:#fff;">
+      <i class="fab fa-linkedin-in fa-lg align-middle"></i>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/256776576547" target="_blank"
+       class="btn rounded-circle"
+       style="width:40px; height:40px; padding:0;
+              background-color:#25D366; border:1px solid #25D366; color:#fff;">
+      <i class="fab fa-whatsapp fa-lg align-middle"></i>
+    </a>
+  </div>
+</div>
+
     </div>
 
     <hr class="my-4">
@@ -248,12 +345,18 @@
 </footer>
 
   <!-- Scripts -->
+  <!-- Bootstrap 5.3.5 JS bundle (includes Popper, no jQuery) -->
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+crossorigin="anonymous"
+></script>
+
   <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
   <script src="{% static 'js/plugins.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
   <!-- Bootstrap v5.3.5 Bundle (includes Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-
+  
 </body>
 
 </html>

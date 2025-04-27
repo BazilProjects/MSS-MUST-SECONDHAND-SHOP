@@ -236,3 +236,21 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.delete()
     return redirect('dashboard')
+
+def disclaimer_view(request):
+    """
+    Renders the disclaimer page.
+    """
+    return render(request, 'disclaimer.html')
+
+def terms_view(request):
+    """
+    Renders the Terms and Conditions page.
+    """
+    return render(request, 'terms_and_conditions.html')
+
+def our_apps_view(request):
+    """
+    Renders the Our Apps showcase page.
+    """
+    return render(request, 'our_apps.html')

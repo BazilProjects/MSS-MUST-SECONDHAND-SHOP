@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Our Apps – Gigz{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <header class="text-center mb-5">
+    <h1 class="display-6 fw-bold text-primary">Our Apps</h1>
+    <p class="lead text-muted">Tools designed for clarity, ease of use, and minimal distraction.</p>
+  </header>
+
+  <div class="row gy-4">
+    <!-- YouTube Downloader -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm rounded-3">
+        <img src="{% static 'img/youtube_downloader.png' %}"
+             class="card-img-top" alt="YouTube Downloader App">
+        <div class="card-body">
+          <h2 class="h5 text-primary">YouTube Downloader</h2>
+          <p class="text-muted">
+            Effortlessly save videos for offline viewing. Simple steps—
+            paste a link, choose format, download.
+          </p>
+          <a href="#" class="btn btn-info">
+            <i class="fas fa-download me-1"></i> Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skin Care Clinic AI Dermatologist -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm rounded-3">
+        <img src="{% static 'img/ai_dermatologist.png' %}"
+             class="card-img-top" alt="AI Dermatologist App">
+        <div class="card-body">
+          <h2 class="h5 text-primary">AI Dermatologist</h2>
+          <p class="text-muted">
+            Upload a skin photo and get instant, AI-powered analysis and
+            recommended treatments.
+          </p>
+          <a href="#" class="btn btn-info">
+            <i class="fas fa-stethoscope me-1"></i> Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
