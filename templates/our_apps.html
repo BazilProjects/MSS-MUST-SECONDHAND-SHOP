@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Our Apps – Gigz{% endblock %}
-
+{% load static %}
 {% block content %}
 <section class="container py-5">
   <header class="text-center mb-5">
@@ -12,7 +12,7 @@
     <!-- YouTube Downloader -->
     <div class="col-md-6">
       <div class="card h-100 shadow-sm rounded-3">
-        <img src="{% static 'img/youtube_downloader.png' %}"
+        <img src="{% static 'img/youtube_downloader.jpeg' %}"
              class="card-img-top" alt="YouTube Downloader App">
         <div class="card-body">
           <h2 class="h5 text-primary">YouTube Downloader</h2>
@@ -20,7 +20,7 @@
             Effortlessly save videos for offline viewing. Simple steps—
             paste a link, choose format, download.
           </p>
-          <a href="#" class="btn btn-info">
+          <a href="" class="btn btn-info" target="_blank">
             <i class="fas fa-download me-1"></i> Learn More
           </a>
         </div>
@@ -30,7 +30,7 @@
     <!-- Skin Care Clinic AI Dermatologist -->
     <div class="col-md-6">
       <div class="card h-100 shadow-sm rounded-3">
-        <img src="{% static 'img/ai_dermatologist.png' %}"
+        <img src="{% static 'img/ai_dermatologist.jpeg' %}"
              class="card-img-top" alt="AI Dermatologist App">
         <div class="card-body">
           <h2 class="h5 text-primary">AI Dermatologist</h2>
@@ -38,7 +38,7 @@
             Upload a skin photo and get instant, AI-powered analysis and
             recommended treatments.
           </p>
-          <a href="#" class="btn btn-info">
+          <a href="https://uderm.pro" class="btn btn-info" target="_blank">
             <i class="fas fa-stethoscope me-1"></i> Learn More
           </a>
         </div>
