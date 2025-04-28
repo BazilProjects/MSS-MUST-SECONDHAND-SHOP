@@ -108,6 +108,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 def log_in(request):
+    form = SignUpForm()
     """Login view — on POST, validate phone & PIN, then authenticate."""
     if request.method == "POST":
         phone_number = request.POST.get("phone_number", "").strip()
@@ -135,7 +136,7 @@ def log_in(request):
         return redirect("log_in")
 
     # GET → just render the form
-    return render(request, "products/login.html", {
+    return render(request, "products/login.html", {"form": form,
         "phone_number": request.POST.get("phone_number", "")
     })
 
@@ -238,19 +239,29 @@ def delete_product(request, product_id):
     return redirect('dashboard')
 
 def disclaimer_view(request):
+    form = SignUpForm()
     """
     Renders the disclaimer page.
     """
-    return render(request, 'disclaimer.html')
+    return render(request, 'disclaimer.html', {"form": form})
 
 def terms_view(request):
+    form = SignUpForm()
     """
     Renders the Terms and Conditions page.
     """
-    return render(request, 'terms_and_conditions.html')
+    return render(request, 'terms_and_conditions.html', {"form": form})
+
+def how_it_works(request):
+    form = SignUpForm()
+    """
+    Renders the Terms and Conditions page.
+    """
+    return render(request, 'how_it_works.html', {"form": form})
 
 def our_apps_view(request):
+    form = SignUpForm()
     """
     Renders the Our Apps showcase page.
     """
-    return render(request, 'our_apps.html')
+    return render(request, 'our_apps.html', {"form": form})

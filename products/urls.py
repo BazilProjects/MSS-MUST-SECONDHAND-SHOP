@@ -16,6 +16,7 @@ urlpatterns = [
 
 
     path("", product_list, name="product_list"),
+    path("how_it_works", how_it_works, name="how_it_works"),
     path("add_product", add_product, name="add_product"),
     path("dashboard", dashboard, name="dashboard"),
     path("products/ajax/<int:page>/", product_list_ajax, name="product_list_ajax"),
