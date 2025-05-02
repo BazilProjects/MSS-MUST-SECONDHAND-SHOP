@@ -35,65 +35,59 @@
 
       <div id="product-list" class="row g-3">
         {% for product in products %}
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="position-relative overflow-hidden">
       
-          {% comment %}
-            Build the WhatsApp message in one variable, then urlencode it.
-          {% endcomment %}
-          {% with
-            msg="I would like to buy this: "|add:product.name|add:" "|add:request.build_absolute_uri(product.get_absolute_url)
-          %}
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-              <div class="card product-card h-100 shadow-sm">
-                <div class="position-relative overflow-hidden">
+                <img
+                  src="{{ product.image1.url }}"
+                  alt="{{ product.name }}"
+                  class="card-img-top product-card__image"
+                />
+      
+                <!-- WhatsApp “Buy” button -->
+                <a
+                  href="{{ product.whatsapp_url }}"
+                  target="_blank"
+                  class="btn btn-white position-absolute bottom-0 end-0 m-2 p-2 rounded-circle shadow-sm"
+                  style="width:48px; height:48px;"
+                >
                   <img
-                    src="{{ product.image1.url }}"
-                    alt="{{ product.name }}"
-                    class="card-img-top product-card__image"
+                    src="{% static 'images/whatsapp-brands.svg' %}"
+                    alt="WhatsApp"
+                    style="width:32px; height:32px;"
                   />
+                </a>
       
-                  <!-- WhatsApp “Buy” button -->
-                  <a
-                    href="https://api.whatsapp.com/send?phone={{ product.user }}&text={{ msg|urlencode }}"
-                    target="_blank"
-                    class="btn btn-white position-absolute bottom-0 end-0 m-2 p-2 rounded-circle shadow-sm"
-                    style="width:48px; height:48px;"
-                  >
-                    <img
-                      src="{% static 'images/whatsapp-brands.svg' %}"
-                      alt="WhatsApp"
-                      style="width:32px; height:32px;"
-                    />
-                  </a>
-      
-                  {% if product.is_new %}
-                    <div class="badge bg-success text-white position-absolute top-0 start-0 m-2">
-                      Brand New
-                    </div>
-                  {% else %}
-                    <div class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
-                      Second Hand
-                    </div>
-                  {% endif %}
-                </div>
-      
-                <div class="card-body d-flex flex-column">
-                  <h3 class="card-title fs-6 text-truncate mb-2">
-                    <a
-                      href="{{ product.get_absolute_url }}"
-                      class="text-decoration-none text-accent"
-                    >
-                      {{ product.name }}
-                    </a>
-                  </h3>
-                  <div class="mt-auto d-flex justify-content-between">
-                    <span class="fw-bold">{{ product.price }} UGX</span>
+                {% if product.is_new %}
+                  <div class="badge bg-success text-white position-absolute top-0 start-0 m-2">
+                    Brand New
                   </div>
+                {% else %}
+                  <div class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
+                    Second Hand
+                  </div>
+                {% endif %}
+              </div>
+      
+              <div class="card-body d-flex flex-column">
+                <h3 class="card-title fs-6 text-truncate mb-2">
+                  <a
+                    href="{{ product.get_absolute_url }}"
+                    class="text-decoration-none text-accent"
+                  >
+                    {{ product.name }}
+                  </a>
+                </h3>
+                <div class="mt-auto d-flex justify-content-between">
+                  <span class="fw-bold">{{ product.price }} UGX</span>
                 </div>
               </div>
             </div>
-          {% endwith %}
+          </div>
         {% endfor %}
       </div>
+      
       
       
       {% if total_pages > 1 %}

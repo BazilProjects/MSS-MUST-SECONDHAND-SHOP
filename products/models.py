@@ -3,7 +3,7 @@ from django.db import models
 #from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.urls import reverse
-
+import urllib.parse
 
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products")
@@ -26,6 +26,21 @@ class Product(models.Model):
         # build URL using the product’s numeric ID
         return reverse("product_detail", kwargs={"pk": self.pk})
 
+    @property
+    def whatsapp_url(self):
+        """
+        Example output:
+        https://api.whatsapp.com/send?phone=256712345678&
+        text=I%20would%20like%20to%20buy%20this%3A%20Cool%20Widget%20https%3A//example.com/product/1/
+        """
+        text = f"I would like to buy this: {self.name} {self.get_absolute_url()}"
+        return (
+            "https://api.whatsapp.com/send?"
+            + urllib.parse.urlencode({
+                "phone": self.user,
+                "text" : text
+            })
+        )
 
 """
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
