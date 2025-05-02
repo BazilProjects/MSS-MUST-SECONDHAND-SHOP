@@ -6,10 +6,10 @@ from django.conf import settings
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products")
     name = models.CharField(max_length=255, blank=True, null=True)
-    price = models.IntegerField()
+    price = models.CharField(max_length=255, blank=True, null=True)
     is_new = models.BooleanField(default=False)
     is_old = models.BooleanField(default=False)
-    image1 = models.ImageField(upload_to='media/products/')
+    image1 = models.ImageField(upload_to='media/products/', default=None)
 
     '''
     image1 = CloudinaryField('image', folder='products/', blank=True, null=True)
