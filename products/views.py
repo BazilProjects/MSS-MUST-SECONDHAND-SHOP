@@ -9,6 +9,8 @@ from django.core.paginator import Paginator
 from django.urls import path
 from .models import Product
 import json
+
+from django.views.generic import ListView, DetailView
 @login_required
 def dashboard(request):
     products = Product.objects.all()#.filter(user=request.user)
@@ -265,3 +267,9 @@ def our_apps_view(request):
     Renders the Our Apps showcase page.
     """
     return render(request, 'our_apps.html', {"form": form})
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "product_details.html"  # create this template
+    context_object_name = "product"

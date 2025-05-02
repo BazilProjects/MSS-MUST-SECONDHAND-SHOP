@@ -40,11 +40,17 @@
             <div class="position-relative overflow-hidden">
               <img src="{{ product.image1.url }}" alt="{{ product.name }}" class="card-img-top product-card__image">
               <button
+            
                 type="button"
+
                 onclick="window.open(
-                  'https://api.whatsapp.com/send?phone={{ product.user }}&text={{ 'I would like to buy this ' | urlencode }}{{product.name}}{{ product.image1.url}}',
-                  '_blank'
+                  'https://api.whatsapp.com/send?
+                    phone={{ product.user }}&
+                    text={{ "I would like to buy this: " | urlencode }}
+                        {{ product.name | urlencode }}%20
+                        {{ request.build_absolute_uri(product.get_absolute_url) | urlencode }}'
                 )"
+              target="_blank"
                 style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; color: #fff; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;">
                 <img
                   src="{% static 'images/whatsapp-brands.svg' %}"

@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  /* Mbarara University inspired colors */
+  .must-primary { background-color: #006400; }   /* Dark Green */
+  .must-accent  { color: #FFD700; }               /* Gold */
+  .must-border  { border-color: #006400 !important; }
+  .must-btn     { background-color: #006400; color: #fff; }
+  .must-btn:hover { background-color: #005000; }
+</style>
+
+<div class="container py-5">
+  <div class="card must-border shadow-lg">
+    <div class="row g-0">
+      <div class="col-md-6">
+        <img src="{{ product.image1.url }}" 
+             class="img-fluid rounded-start" 
+             alt="{{ product.name }}">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h2 class="card-title must-primary text-white p-2 rounded">{{ product.name }}</h2>
+          <h4 class="fw-bold mt-3">Price: <span class="must-accent">{{ product.price }} UGX</span></h4>
+          <p class="mt-4">{{ product.description }}</p>
+
+          <a href="{{ request.build_absolute_uri(product.get_absolute_url) }}" 
+             class="btn must-btn btn-lg mt-4">
+            View Product Details
+          </a>
+          
+          <!-- WhatsApp Inquiry -->
+          <a href="https://api.whatsapp.com/send?phone={{ product.user }}&text={{ ('I would like to buy this: ' ~ product.name ~ ' ' ~ request.build_absolute_uri(product.get_absolute_url))|urlencode }}" 
+             target="_blank" class="btn btn-outline-success btn-lg mt-2">
+            <i class="fab fa-whatsapp"></i> Inquire on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

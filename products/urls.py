@@ -10,7 +10,7 @@ urlpatterns = [
 
 
     
-     path('disclaimer', disclaimer_view, name='disclaimer'),
+    path('disclaimer', disclaimer_view, name='disclaimer'),
     path('terms-and-conditions', terms_view, name='terms_and_conditions'),
     path('our-apps/', our_apps_view, name='our_apps'),
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path("", product_list, name="product_list"),
     path("how_it_works", how_it_works, name="how_it_works"),
     path("add_product", add_product, name="add_product"),
+    path("product/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
     path("dashboard", dashboard, name="dashboard"),
     path("products/ajax/<int:page>/", product_list_ajax, name="product_list_ajax"),
     path("products/edit/<int:product_id>/", edit_product, name="edit_product"),

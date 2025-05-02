@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 #from cloudinary.models import CloudinaryField
 from django.conf import settings
+from django.urls import reverse
+
 
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products")
@@ -19,6 +21,10 @@ class Product(models.Model):
     '''
     def __str__(self):
         return f"{self.name} by {self.user.phone_number}"
+
+    def get_absolute_url(self):
+        # build URL using the product’s numeric ID
+        return reverse("product_detail", kwargs={"pk": self.pk})
 
 
 """
