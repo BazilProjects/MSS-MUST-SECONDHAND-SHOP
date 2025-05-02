@@ -133,7 +133,7 @@ def log_in(request):
                 messages.error(request, "Invalid phone number or PIN.")
 
         # Always redirect on POST, to avoid double submits
-        return redirect("log_in")
+        return redirect("login")
 
     # GET → just render the form
     return render(request, "products/login.html", {"form": form,
