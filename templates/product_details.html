@@ -1,40 +1,121 @@
-
 {% extends "base.html" %}
-
 {% block content %}
 <style>
-  /* Mbarara University inspired colors */
-  .must-primary { background-color: #006400; }   /* Dark Green */
-  .must-accent  { color: #FFD700; }               /* Gold */
-  .must-border  { border-color: #006400 !important; }
-  .must-btn     { background-color: #006400; color: #fff; }
-  .must-btn:hover { background-color: #005000; }
+  :root {
+    --must-primary: #2e7d32; /* toned-down green */
+    --must-accent: #FFD700;
+    --gradient-start: #444;
+    --gradient-end: #666;
+    --btn-gradient-start: #2e7d32;
+    --btn-gradient-end: #4caf50;
+  }
+
+  .must-card {
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .must-card .card-body {
+    background-color: #f9f9f9;
+  }
+
+  .must-header {
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: 0.5rem;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .must-price {
+    font-family: 'Audiowide', cursive;
+    font-size: 1.5rem;
+    color: var(--must-accent);
+  }
+
+  .must-image {
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+  .must-image img {
+    transition: transform 0.5s ease;
+  }
+  .must-image img:hover {
+    transform: scale(1.05) rotate(1deg);
+  }
+
+  .must-btn {
+    background: linear-gradient(120deg, var(--btn-gradient-start), var(--btn-gradient-end));
+    color: #fff;
+    border: none;
+    border-radius: .5rem;
+    padding: .75rem 1.5rem;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .must-btn:hover {
+    background: linear-gradient(120deg, var(--btn-gradient-end), var(--btn-gradient-start));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .must-inquire {
+    border: 2px solid var(--must-primary);
+    border-radius: .5rem;
+    color: var(--must-primary);
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    padding: .75rem 1.5rem;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .must-inquire:hover {
+    background: var(--must-primary);
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  .floating {
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
 </style>
 
 <div class="container py-5">
-  <div class="card must-border shadow-lg">
-    <div class="row g-0">
-      <div class="col-md-6">
+  <div class="must-card p-3">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-6 text-center must-image floating p-3">
         <img src="{{ product.image1.url }}" 
-             class="img-fluid rounded-start" 
+             class="img-fluid" 
              alt="{{ product.name }}">
       </div>
       <div class="col-md-6">
         <div class="card-body">
-          <h2 class="card-title must-primary text-white p-2 rounded">{{ product.name }}</h2>
-          <h4 class="fw-bold mt-3">Price: <span class="must-accent">{{ product.price }} UGX</span></h4>
-          <p class="mt-4">{{ product.description }}</p>
+          <h2 class="must-header mb-3">
+            {{ product.name }}
+          </h2>
+          <h4 class="fw-bold mt-2">
+            Price: <span class="must-price">{{ product.price }} UGX</span>
+          </h4>
+          <p class="mt-4" style="line-height:1.6; font-size:1.1rem;">
+            {{ product.description }}
+          </p>
 
-          <a href="{{ request.build_absolute_uri(product.get_absolute_url) }}" 
-             class="btn must-btn btn-lg mt-4">
-            View Product Details
-          </a>
-          
-          <!-- WhatsApp Inquiry -->
-          <a href="https://api.whatsapp.com/send?phone={{ product.user }}&text={{ ('I would like to buy this: ' ~ product.name ~ ' ' ~ request.build_absolute_uri(product.get_absolute_url))|urlencode }}" 
-             target="_blank" class="btn btn-outline-success btn-lg mt-2">
-            <i class="fab fa-whatsapp"></i> Inquire on WhatsApp
-          </a>
+          <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+            <a href="https://api.whatsapp.com/send?phone={{ product.user }}&text={{ 'I would like to buy this: '|add:product.name|add:' • '|add:request.build_absolute_uri|urlencode }}" 
+               target="_blank" 
+               class="must-inquire btn btn-lg flex-fill">
+              <i class="fab fa-whatsapp me-2"></i> Inquire on WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>

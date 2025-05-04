@@ -38,23 +38,20 @@
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
           <div class="card product-card h-100 shadow-sm">
             <div class="position-relative overflow-hidden">
-              <img src="{{ product.image1.url }}" alt="{{ product.name }}" class="card-img-top product-card__image">
+              <a href="{% url 'product_detail' product.id %}"><img src="{{ product.image1.url }}" alt="{{ product.name }}" class="card-img-top product-card__image"></a>
+              
               <button
-            
                 type="button"
+                onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}&text={{ 'I would like to buy this: '|add:product.name|add:' • '|add:request.build_absolute_uri|slice:':-1'|add:product.get_absolute_url|urlencode }}', '_blank')"
 
-                onclick="window.open(
-                  'https://api.whatsapp.com/send?phone={{ product.user }}&text={{ 'I would like to buy this ' | urlencode }}{{product.name}} {{ ' at ' | urlencode }}{{product.price}}{{ ' posted on MGS ' | urlencode }}{{ product.image1.url}}',
-                  '_blank'
-                )"
-              target="_blank"
-                style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; color: #fff; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;">
+                style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;"
+              >
                 <img
                   src="{% static 'images/whatsapp-brands.svg' %}"
                   alt="WhatsApp"
                   style="display: block; width: 32px; height: 32px;" />
               </button>
-
+            
               {% if product.is_new %}
               <div class="badge bg-success text-white position-absolute top-0 start-0 m-2">Brand New</div>
               {% else %}

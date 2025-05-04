@@ -269,7 +269,12 @@ def our_apps_view(request):
     return render(request, 'our_apps.html', {"form": form})
 
 
+# products/views.py
+from django.views.generic import DetailView
+#from .models import Product
+
 class ProductDetailView(DetailView):
     model = Product
-    template_name = "product_details.html"  # create this template
+    template_name = "product_details.html"
     context_object_name = "product"
+    pk_url_kwarg = 'id'            # ← add this line

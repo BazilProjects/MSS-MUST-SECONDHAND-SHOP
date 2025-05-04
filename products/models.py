@@ -24,7 +24,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         # build URL using the product’s numeric ID
-        return reverse("product_detail", kwargs={"pk": self.pk})
+        return reverse("product_detail", kwargs={"id": self.id})
 
     @property
     def whatsapp_url(self):
