@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+(ocq$n8k7q0c^%gz5w%lxcu8wawq2#^%gznr7vt*0&-)a5z4o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.gigz.store','137.184.78.92','*']
+ALLOWED_HOSTS = ['must.gigz.store','137.184.78.92','*']
 
 
 # Application definition
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -95,7 +95,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
