@@ -22,3 +22,12 @@ urlpatterns += static(settings.MEDIA_URL,
                               document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL,
                               document_root=settings.STATIC_ROOT)
+
+
+# project/urls.py
+
+
+
+handler404 = 'products.views.custom_404'
+handler403 = 'products.views.custom_403'
+handler500 = 'products.views.custom_500'

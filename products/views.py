@@ -278,3 +278,26 @@ class ProductDetailView(DetailView):
     template_name = "product_details.html"
     context_object_name = "product"
     pk_url_kwarg = 'id'            # ← add this line
+
+
+
+# myapp/views.py
+
+from django.shortcuts import redirect
+from django.contrib import messages
+from django.urls import reverse
+
+def custom_404(request, exception):
+    messages.error(request,
+        "😕 Oops! We couldn’t find that page (404). You’ve been brought back home.")
+    return redirect(reverse('product_list'))
+
+def custom_403(request, exception):
+    messages.warning(request,
+        "🚫 Sorry, you don’t have permission to view that page (403). Back to home you go.")
+    return redirect(reverse('product_list'))
+
+def custom_500(request):
+    messages.error(request,
+        "🔥 Something went wrong on our end (500). Please try again later.")
+    return redirect(reverse('product_list'))
