@@ -277,7 +277,17 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = "product_details.html"
     context_object_name = "product"
-    pk_url_kwarg = 'id'            # ← add this line
+    pk_url_kwarg = 'id'
+
+    def get_context_data(self, **kwargs):
+        # grab the existing context
+        context = super().get_context_data(**kwargs)
+        product = self.object
+
+        # build the absolute URL for image1
+        context['page_image_url'] = self.request.build_absolute_uri(product.image1.url)
+
+        return context
 
 
 

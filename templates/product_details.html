@@ -1,5 +1,22 @@
 {% extends "base.html" %}
+<!-- templates/base.html -->
+
+{% block head_meta %}
+  <title>{{ product.name }} — MyStore</title>
+  <meta property="og:title"       content="{{ product.name }}" />
+  <meta property="og:description" content="{{ product.short_description|truncatechars:160 }}" />
+  <meta property="og:image"       content="{{ page_image_url }}" />
+  <meta property="og:url"         content="{{ request.build_absolute_uri }}" />
+  <meta property="og:type"        content="product" />
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="{{ product.name }}" />
+  <meta name="twitter:description" content="{{ product.short_description|truncatechars:160 }}" />
+  <meta name="twitter:image"       content="{{ page_image_url }}" />
+{% endblock %}
+
 {% block content %}
+
 <style>
   :root {
     --must-primary: #2e7d32; /* toned-down green */

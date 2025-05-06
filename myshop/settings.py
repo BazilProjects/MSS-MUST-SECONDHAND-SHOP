@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+(ocq$n8k7q0c^%gz5w%lxcu8wawq2#^%gznr7vt*0&-)a5z4o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['must.gigz.store','www.must.gigz.store','137.184.78.92','*']
 
