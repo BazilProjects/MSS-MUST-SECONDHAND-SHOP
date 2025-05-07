@@ -6,9 +6,9 @@
   <meta property="og:url"         content="{{ request.build_absolute_uri }}">
   <meta property="og:type"        content="website">
 
-  {# CORRECT IMAGE TAG #}
-  <meta property="og:image"
-        content="{{ site_root }}{% static 'images/logo2.png' %}">
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:image"       content="{% static 'images/logo2.png' %}" />
 {% endblock%}
 {% block content %}
 {% load phone_filters %}   
