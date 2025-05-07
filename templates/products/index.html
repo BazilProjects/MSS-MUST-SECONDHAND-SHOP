@@ -5,9 +5,12 @@
 <meta property="og:description" content="Where to Buy and Sell all your SecondHand Products In MUST.">
 <meta property="og:url"         content="{{ request.build_absolute_uri }}" />
 <meta property="og:type"        content="website">
-<meta property="og:image"       content="https://must.gigz.store/static/images/logo2.png">
+{% load static %}
+{% with domain=request.scheme|add:'://'|add:request.get_host %}
+  <meta property="og:image"
+        content="{{ domain }}{% static 'images/logo2.png' %}">
+{% endwith %}
 
-<meta name="twitter:image"      content="https://must.gigz.store/static/images/logo2.png">
 
 {% endblock%}
 {% block content %}
