@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head_meta %}
-<meta property="og:title" content="MUST GIGZ STORE">
-<meta property="og:description" content="Where to Buy and Sell off all your SecondHand Products In MUST.">
-<meta property="og:image" content="{{ request.build_absolute_uri }}{% static 'images/logo2.png' %}">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:type" content="website">
+<meta property="og:title"       content="MUST GIGZ STORE">
+  <meta property="og:description" content="Where to Buy and Sell all your SecondHand Products In MUST.">
+  <meta property="og:url"         content="{{ request.build_absolute_uri }}">
+  <meta property="og:type"        content="website">
 
+  {# CORRECT IMAGE TAG #}
+  <meta property="og:image"
+        content="{{ site_root }}{% static 'images/logo2.png' %}">
 {% endblock%}
 {% block content %}
 {% load phone_filters %}   

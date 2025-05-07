@@ -164,7 +164,8 @@ def product_list(request):
     paginator = Paginator(products, 5)
     first_page = paginator.get_page(1)
     form = SignUpForm()
-    return render(request, "products/index.html", {"products": first_page, "total_pages": paginator.num_pages,"form":form})
+    site_root = request.build_absolute_uri('/')   # e.g. "https://example.com/"
+    return render(request, "products/index.html", {"products": first_page, "total_pages": paginator.num_pages,"form":form,'site_root': site_root,})
 """
 def product_list_ajax(request, page):
     products = Product.objects.all().order_by("id")
