@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head_meta %}
+<meta property="og:title" content="MUST GIGZ STORE">
+<meta property="og:description" content="Where to Buy and Sell off all your SecondHand Products In MUST.">
+<meta property="og:image" content="{{ request.build_absolute_uri }}{% static 'images/logo2.png' %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="website">
 
+{% endblock%}
 {% block content %}
-   
+{% load phone_filters %}   
   <!-- Coupon Banner -->
   <section class="coupon-section">
     <div class="container px-3 px-md-0">
@@ -42,7 +49,7 @@
               
               <button
                 type="button"
-                onclick="window.open('https://api.whatsapp.com/send?phone={{ product.user }}&text={{ 'I would like to buy this: '|add:product.name|add:' • '|add:request.build_absolute_uri|slice:':-1'|add:product.get_absolute_url|urlencode }}', '_blank')"
+                onclick="window.open('https://api.whatsapp.com/send?phone={{  product.user|format_whatsapp }}&text={{ 'I would like to buy this: '|add:product.name|add:' • '|add:request.build_absolute_uri|slice:':-1'|add:product.get_absolute_url|urlencode }}', '_blank')"
 
                 style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;"
               >
@@ -79,63 +86,74 @@
       {% endif %}
     </div>
   </section>
-
   <script>
-    document.getElementById("load-more")?.addEventListener("click", function() {
-      const btn = this;
+    document.getElementById("load-more")?.addEventListener("click", async function() {
+      const btn      = this;
       const nextPage = btn.dataset.page;
   
-      console.log(`Loading page: ${nextPage}`);  // Debugging output
+      try {
+        const res  = await fetch(`/products/ajax/${nextPage}/`);
+        const data = await res.json();
+        const row  = document.querySelector("#product-list");
   
-      fetch(`/products/ajax/${nextPage}/`)
-        .then(r => r.json())
-        .then(data => {
-          console.log(data);  // Debugging output to check the response
-  
-          // Check if data.products exists and has items
-          if (data.products && data.products.length > 0) {
-            const row = document.querySelector("#product-list");
-            data.products.forEach(product => {
-              const col = document.createElement("div");
-              col.className = "col-6 col-sm-4 col-md-3 col-lg-2";
-              col.innerHTML = `
-                <div class="card product-card h-100 shadow-sm">
-                  <div class="position-relative overflow-hidden">
-                    <img src="${product.image1?.url || product.image1}" alt="${product.name}" class="card-img-top product-card__image">
-                    <button class="btn btn-light whatsapp-btn" onclick="window.open('https://api.whatsapp.com/send?phone=${product.user}','_blank')"
-                      style="position: absolute; bottom: 10px; right: 10px; background-color: white; border: none; color: #fff; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;">
-                      <img
-                      src="{% static 'images/whatsapp-brands.svg' %}"
-                      alt="WhatsApp"
-                      style="display: block; width: 32px; height: 32px;" />
-                    </button>
-                    
-                    <!-- Display the product status -->
-                    ${product.is_new ? `<div class="badge bg-success text-white position-absolute top-0 start-0 m-2">Brand New</div>` : `<div class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Second Hand</div>`}
-                  </div>
-                  <div class="card-body d-flex flex-column">
-                    <h3 class="card-title fs-6 text-truncate mb-2">
-                      <a href="#" class="text-decoration-none text-accent">${product.name}</a>
-                    </h3>
-                    <div class="mt-auto d-flex justify-content-between">
-                      <span class="fw-bold">${product.price} UGX</span>
-                    </div>
-                  </div>
-                </div>`;
-              row.appendChild(col);
-            });
-  
-            // Check if there are more pages to load
-            if (!data.has_next) {
-              btn.remove();  // Remove the "Load More" button if no more pages
-            } else {
-              btn.dataset.page = parseInt(nextPage) + 1;  // Update the page number for the next request
-            }
+        data.products.forEach(p => {
+          // 1) normalize phone
+          let phone = String(p.phone);
+          if (phone.length === 12 && phone.startsWith("256")) {
+            /* phone stays as-is */
+          } else if (phone.length >= 10) {
+            phone = "256" + phone.slice(-9);
           } else {
-            console.error("No products found in the response data");
+            phone = "";
           }
-        })
-        .catch(err => console.error("Load more error:", err));
+  
+          // 2) build text param
+          const fullUrl = window.location.origin + p.url;
+          const text    = `I would like to buy this: ${p.name} • ${fullUrl}`;
+          const params  = new URLSearchParams({ phone, text }).toString();
+  
+          // 3) create card
+          const col = document.createElement("div");
+          col.className = "col-6 col-sm-4 col-md-3 col-lg-2";
+          col.innerHTML = `
+            <div class="card product-card h-100 shadow-sm">
+              <div class="position-relative overflow-hidden">
+                <img src="${p.image1}" alt="${p.name}" class="card-img-top product-card__image">
+                <button class="btn btn-light whatsapp-btn"
+                        onclick="window.open(
+                          'https://api.whatsapp.com/send?${params}',
+                          '_blank'
+                        )"
+                        style="position:absolute;bottom:10px;right:10px;">
+                  <img src="${window.location.origin + '/static/images/whatsapp-brands.svg'}"
+                       alt="WhatsApp" style="width:32px;height:32px;">
+                </button>
+                ${p.is_new
+                  ? `<div class="badge bg-success position-absolute top-0 start-0 m-2">Brand New</div>`
+                  : `<div class="badge bg-warning position-absolute top-0 start-0 m-2">Second Hand</div>`
+                }
+              </div>
+              <div class="card-body d-flex flex-column">
+                <h3 class="card-title fs-6 text-truncate mb-2">
+                  <a href="${p.url}" class="text-decoration-none">${p.name}</a>
+                </h3>
+                <div class="mt-auto d-flex justify-content-between">
+                  <span class="fw-bold">${p.price} UGX</span>
+                </div>
+              </div>
+            </div>`;
+          row.appendChild(col);
+        });
+  
+        if (!data.has_next) {
+          btn.remove();
+        } else {
+          btn.dataset.page = Number(nextPage) + 1;
+        }
+  
+      } catch (err) {
+        console.error("Load more error:", err);
+      }
     });
   </script>
   
