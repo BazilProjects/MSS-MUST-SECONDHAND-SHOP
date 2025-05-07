@@ -7,10 +7,6 @@
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:type" content="website">
 
-{% with domain=request.scheme|add:'://'|add:request.get_host %}
-  <meta property="og:image"
-        content="{{ domain }}{% static 'images/logo2.png' %}">
-
 {% endblock%}
 {% block content %}
 {% load phone_filters %}   
